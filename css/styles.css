@@ -1,0 +1,42 @@
+html{
+    width: 100%;
+    height: 100%;
+
+}
+body{
+    background-color: black;
+    color: white;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    height: 100%;
+
+}
+.contenedor1{
+    z-index: 2;
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+    align-items: center;
+}
+.link{
+    width: 50%;
+    justify-self: center;
+    
+}
+.link_children{
+    margin-bottom: 40px;
+}
+
+.contenedor1  , button{
+    width: 100%;
+    
+}
+button{
+    background-color: rgb(140, 0, 255);
+    border-radius: 15px;
+    color: white;
+    height: 56px;
+    font-size: x-large;
+}
