@@ -1,0 +1,46 @@
+/* src/components/Navbar.css */
+
+.navbar {
+  width: 100%;
+  background-color: #333;
+  color: white;
+  padding: 10px;
+}
+
+.navbar.logged-in {
+  background-color: #4CAF50; /* Verde cuando está logueado */
+}
+
+.navbar.logged-out {
+  background-color: #f44336; /* Rojo cuando no está logueado */
+}
+
+.navbar-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  margin-right: 10px;
+}
+
+.user-icon {
+  margin-right: 10px;
+}
+
+button {
+  background-color: #4CAF50;
+  color: white;
+  border: none;
+  padding: 5px 10px;
+  cursor: pointer;
+  border-radius: 3px;
+}
+
+button:hover {
+  background-color: #45a049;
+}
