@@ -2,7 +2,7 @@
 import React from "react";
 
 const ErrorMessages = ({ errors }) => (
-  <div>
+  <div className="error-messages">
     {Object.keys(errors).map((key) => (
       <p key={key} className="error">
         {errors[key]}

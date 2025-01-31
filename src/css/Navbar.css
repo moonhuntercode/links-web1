@@ -1,46 +1,91 @@
-/* src/components/Navbar.css */
+/* src/css/Navbar.css */
 
 .navbar {
-  width: 100%;
-  background-color: #333;
-  color: white;
-  padding: 10px;
-}
-
-.navbar.logged-in {
-  background-color: #4CAF50; /* Verde cuando está logueado */
-}
-
-.navbar.logged-out {
-  background-color: #f44336; /* Rojo cuando no está logueado */
-}
-
-.navbar-content {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  padding: 1rem;
+  background-color: var(--navbar-background);
+  color: var(--navbar-text);
 }
 
-.avatar {
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
-  margin-right: 10px;
+.navbar.dark {
+  --navbar-background: #333;
+  --navbar-text: #fff;
 }
 
-.user-icon {
-  margin-right: 10px;
+.navbar.light {
+  --navbar-background: #fff;
+  --navbar-text: #333;
 }
 
-button {
-  background-color: #4CAF50;
-  color: white;
+.navbar-list {
+  list-style-type: none;
+  display: flex;
+  gap: 1rem;
+}
+
+.navbar-list.dark {
+  color: #fff;
+}
+
+.navbar-list.light {
+  color: #333;
+}
+
+.navbar-item {
+  margin: 0;
+}
+
+.navbar-link {
+  text-decoration: none;
+  color: inherit;
+  font-weight: bold;
+}
+
+.navbar-link.dark {
+  color: #fff;
+}
+
+.navbar-link.light {
+  color: #333;
+}
+
+.theme-toggle-btn,
+.audio-toggle-btn {
   border: none;
-  padding: 5px 10px;
+  background: none;
+  color: inherit;
   cursor: pointer;
-  border-radius: 3px;
+  font-size: 1rem;
+  padding: 0.5rem 1rem;
+  border-radius: 5px;
+  transition: background-color 0.3s ease;
 }
 
-button:hover {
-  background-color: #45a049;
+.theme-toggle-btn:hover,
+.audio-toggle-btn:hover {
+  background-color: rgba(0, 0, 0, 0.1);
+}
+
+.theme-toggle-btn.dark,
+.audio-toggle-btn.dark {
+  background-color: #444;
+  color: #fff;
+}
+
+.theme-toggle-btn.light,
+.audio-toggle-btn.light {
+  background-color: #ddd;
+  color: #333;
+}
+
+.theme-toggle-btn.dark:hover,
+.audio-toggle-btn.dark:hover {
+  background-color: #555;
+}
+
+.theme-toggle-btn.light:hover,
+.audio-toggle-btn.light:hover {
+  background-color: #ccc;
 }

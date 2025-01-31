@@ -14,7 +14,7 @@ import {
   whatsappIcon,
   defaultAvatar,
   defaultSong,
-} from "../assets/imgs/icons";
+} from "./imgs/icons/index.js";
 
 // Datos ficticios de enlaces y usuarios
 export let fakeDbofLinks = [

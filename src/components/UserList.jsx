@@ -2,17 +2,17 @@
 import React from "react";
 
 const UserList = ({ users, handleUserSelect }) => (
-  <ul className="user-list">
-    {users.map((user, index) => (
-      <li key={index} className="user-item">
-        {user.username}{" "}
-        {user.avatar && <img src={user.avatar} alt="Avatar" className="avatar-small" />}
-        <button className="btn btn-select" onClick={() => handleUserSelect(user)}>
-          Seleccionar
-        </button>
-      </li>
-    ))}
-  </ul>
+  <div className="user-list">
+    <h3>Lista de Usuarios</h3>
+    <ul>
+      {users.map((user, index) => (
+        // Usamos `user.id` si está disponible, sino usamos un índice con un prefijo para hacerlo único
+        <li key={user.id || `user-${index}`} onClick={() => handleUserSelect(user)}>
+          {user.username}
+        </li>
+      ))}
+    </ul>
+  </div>
 );
 
 export default UserList;

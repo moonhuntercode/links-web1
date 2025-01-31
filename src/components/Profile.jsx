@@ -1,26 +1,26 @@
 // src/components/Profile.jsx
-import React from 'react';
+import React from "react";
+import { useUserContext } from "../contexts/UserContext.jsx";
 
-// Ejemplo de datos de usuario
-const user = {
-  name: 'Hedy Lamarr',
-  imageUrl: 'https://i.imgur.com/yXOvdOSs.jpg',
-  imageSize: 90,
+const Profile = () => {
+  const { currentUser } = useUserContext();
+
+  return (
+    <div className="profile-container">
+      {currentUser ? (
+        <div>
+          <h2>Perfil de {currentUser.username}</h2>
+          {currentUser.avatar ? (
+            <img src={currentUser.avatar} alt="Avatar" className="profile-avatar" />
+          ) : (
+            <div className="placeholder-avatar">Sin Avatar</div>
+          )}
+        </div>
+      ) : (
+        <p>Por favor, inicia sesión para ver tu perfil.</p>
+      )}
+    </div>
+  );
 };
 
-export default function Profile() {
-  return (
-    <>
-      <h1>{user.name}</h1>
-      <img
-        className="avatar"
-        src={user.imageUrl}
-        alt={'Foto de ' + user.name}
-        style={{
-          width: user.imageSize,
-          height: user.imageSize,
-        }}
-      />
-    </>
-  );
-}
+export default Profile;

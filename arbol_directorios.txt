@@ -1,0 +1,91 @@
+.
+|-- README.md
+|-- arbol_directorios.txt
+|-- eslint.config.js
+|-- index.html
+|-- package.json
+|-- pnpm-lock.yaml
+|-- public
+|                                   `-- vite.svg
+|-- src
+|   |                               `-- App.jsx
+|   |                               `-- assets
+|   |   |                           `-- avatars
+|   |   |   |                       `-- cat-cute-1.jpg
+|   |   |                           `-- cat-cute-smile-1.jpg
+|   |   |-- imgs
+|   |   |                           `-- icons
+|   |   |       |                   `-- codecademy.png
+|   |   |       |                   `-- codewars-icon.png
+|   |   |       |                   `-- css3-icons.png
+|   |   |       |                   `-- daily-dev.png
+|   |   |       |                   `-- equis-icon.svg
+|   |   |       |                   `-- facebook-icon.png
+|   |   |       |                   `-- frontendmasters.png
+|   |   |       |                   `-- git-icon-black.png
+|   |   |       |                   `-- github-icon.png
+|   |   |       |                   `-- html-icons.png
+|   |   |       |                   `-- index.js
+|   |   |       |                   `-- instagram-version-2.png
+|   |   |       |                   `-- instagram.svg
+|   |   |       |                   `-- javaSc-icons.png
+|   |   |       |                   `-- logo-linkedin.png
+|   |   |       |                   `-- motivatiooon.jpg
+|   |   |       |                   `-- ngl-icon.png
+|   |   |       |                   `-- nodeJs.png
+|   |   |       |                   `-- react-icons.png
+|   |   |       |                   `-- sass-icon.png
+|   |   |       |                   `-- svelte.svg
+|   |   |       |                   `-- telegram-icon.png
+|   |   |       |                   `-- tiktok-icon-2.png
+|   |   |       |                   `-- twitch-icon-v2.png
+|   |   |                           `-- whatsapp.svg
+|   |   |-- links_db.js
+|   |   |-- react.svg
+|   |   `-- songs
+|   |       `-- Kegare-No-Nai-Negai-[ASSASSIN'S-PRIDE-OST].mp3
+|   |-- components
+|   |   |-- Admin.jsx
+|   |   |-- AdminPanel.jsx
+|   |   |-- AvatarManagement.jsx
+|   |   |-- CurrentUser.jsx
+|   |   |-- ErrorBoundary.jsx
+|   |   |-- ErrorMessages.jsx
+|   |   |-- LoginForm.jsx
+|   |   |-- Navbar.jsx
+|   |   |-- Profile.jsx
+|   |   |-- SongManagement.jsx
+|   |   |-- SongUpload.jsx
+|   |   |-- UserComponent.jsx
+|   |   |-- UserForm.jsx
+|   |   |-- UserIcon.jsx
+|   |   |-- UserList.jsx
+|   |   `-- UserManagement.jsx
+|   |-- contexts
+|   |   |-- LoadingContext.jsx
+|   |   |-- ThemeContext.jsx
+|   |   `-- UserContext.jsx
+|   |-- css
+|   |   |-- AdminPanel.css
+|   |   |-- App.css
+|   |   |-- LoginForm.css
+|   |   |-- Navbar.css
+|   |   |-- SongManagement.css
+|   |   |-- UserForm.css
+|   |   |-- UserManagement.css
+|   |   `-- index.css
+|   |-- main.jsx
+|   |-- pages
+|   |   |-- Home.jsx
+|   |   `-- Links.jsx
+|   |-- routes
+|   |   `-- Routes.jsx
+|   `-- utils
+|       |-- adminUtils.js
+|       |-- formValidation.js
+|       |-- handleUserActions.js
+|       |-- useUserForm.js
+|       `-- userUtils.js
+`-- vite.config.js
+
+13 directories, 75 files

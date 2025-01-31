@@ -17,7 +17,9 @@ const CurrentUser = ({ currentUser, handleAvatarUpload, setAvatar, uploadAvatar 
       type="file"
       accept="image/*"
       className="upload-input"
-      onChange={handleAvatarUpload(uploadAvatar, setAvatar, currentUser)}
+      onChange={(event) =>
+        handleAvatarUpload(event, uploadAvatar, setAvatar, currentUser)
+      }
     />
   </div>
 );

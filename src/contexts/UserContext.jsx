@@ -1,133 +1,132 @@
 // src/contexts/UserContext.jsx
-import React, { createContext, useState, useContext, useEffect } from "react";
+import { createContext, useContext, useState, useEffect } from "react";
+import { fakeDbofUsers, fakeDbofSongs } from "../assets/links_db";
 import {
   getUsersFromLocalStorage,
   getCurrentUserFromLocalStorage,
+  getSongsFromLocalStorage,
   saveUsersToLocalStorage,
   saveCurrentUserToLocalStorage,
   saveSongToLocalStorage,
-} from "../utils/userUtils";
+} from "../utils/userUtils"; // Ruta de utilidades para manejo de localStorage
 
-// Crear el contexto de usuario
+// Crear el contexto del usuario
 const UserContext = createContext();
 
-// Proveedor del contexto de usuario
-export function UserProvider({ children }) {
-  const [users, setUsers] = useState([]);
-  const [currentUser, setCurrentUser] = useState(null);
-  const [isLoading, setIsLoading] = useState(true);
-  const [error, setError] = useState(null);
+export const UserProvider = ({ children }) => {
+  // Estado de usuarios, canciones y usuario actual
+  const [users, setUsers] = useState(() => {
+    const storedUsers = getUsersFromLocalStorage(); // Verifica que los usuarios se obtienen de localStorage
+    return storedUsers.length ? storedUsers : fakeDbofUsers;
+  });
+
+  const [songs, setSongs] = useState(() => {
+    const storedSongs = getSongsFromLocalStorage(); // Verifica que las canciones se obtienen de localStorage
+    return storedSongs.length ? storedSongs : fakeDbofSongs;
+  });
+
+  const [currentUser, setCurrentUser] = useState(() => {
+    return getCurrentUserFromLocalStorage() || null; // Obtiene el usuario actual desde localStorage
+  });
+
+  // Sincroniza los estados con el localStorage cuando cambian
+  useEffect(() => {
+    saveUsersToLocalStorage(users);
+    saveSongToLocalStorage(songs);
+  }, [users, songs]);
 
   useEffect(() => {
-    try {
-      const storedUsers = getUsersFromLocalStorage();
-      const storedCurrentUser = getCurrentUserFromLocalStorage();
-      setUsers(storedUsers);
-      setCurrentUser(storedCurrentUser);
-      setIsLoading(false);
-    } catch (e) {
-      setError(e.message);
-      setIsLoading(false);
-    }
-  }, []);
+    saveCurrentUserToLocalStorage(currentUser);
+  }, [currentUser]);
 
-  // Función para añadir usuario con validación
-  const addUser = (user) => {
-    if (users.some((u) => u.username === user.username)) {
-      setError("El nombre de usuario ya existe.");
-      return;
-    }
-    if (users.some((u) => u.password === user.password)) {
-      setError("La contraseña ya está en uso.");
-      return;
-    }
-    const newUserList = [...users, user];
-    setUsers(newUserList);
-    saveUsersToLocalStorage(newUserList);
-    setError(null);
+  // Función para agregar un nuevo usuario
+  const addUser = (newUser) => {
+    setUsers((prevUsers) => {
+      const updatedUsers = [...prevUsers, newUser];
+      saveUsersToLocalStorage(updatedUsers); // Guarda los usuarios actualizados en localStorage
+      return updatedUsers;
+    });
   };
 
+  // Función para actualizar un usuario
   const updateUser = (updatedUser) => {
-    const newUserList = users.map((user) =>
-      user.username === updatedUser.username ? updatedUser : user
-    );
-    setUsers(newUserList);
-    saveUsersToLocalStorage(newUserList);
+    setUsers((prevUsers) => {
+      const updatedUsers = prevUsers.map((user) =>
+        user.id === updatedUser.id ? updatedUser : user
+      );
+      saveUsersToLocalStorage(updatedUsers); // Guarda los usuarios actualizados en localStorage
+      return updatedUsers;
+    });
   };
 
-  const deleteUser = (username) => {
-    const newUserList = users.filter((user) => user.username !== username);
-    setUsers(newUserList);
-    saveUsersToLocalStorage(newUserList);
+  // Función para eliminar un usuario
+  const deleteUser = (userId) => {
+    setUsers((prevUsers) => {
+      const updatedUsers = prevUsers.filter((user) => user.id !== userId);
+      saveUsersToLocalStorage(updatedUsers); // Guarda los usuarios actualizados en localStorage
+      return updatedUsers;
+    });
   };
 
-  const deleteAllUsers = (currentUsername) => {
-    const newUserList = users.filter((user) => user.username === currentUsername);
-    setUsers(newUserList);
-    saveUsersToLocalStorage(newUserList);
-    console.log(`Todos los usuarios eliminados excepto ${currentUsername}.`);
+  // Función para eliminar todos los usuarios excepto el actual
+  const deleteAllUsersExceptCurrent = () => {
+    const updatedUsers = users.filter((user) => user.id === currentUser.id);
+    setUsers(updatedUsers); // Actualiza el estado de los usuarios
+    saveUsersToLocalStorage(updatedUsers); // Guarda los usuarios actualizados en localStorage
   };
 
-  const uploadAvatar = (username, avatar) => {
-    const newUserList = users.map((user) =>
-      user.username === username ? { ...user, avatar } : user
-    );
-    setUsers(newUserList);
-    saveUsersToLocalStorage(newUserList);
+  // Función para agregar una canción
+  const addSong = (newSong) => {
+    const updatedSongs = [...songs, newSong];
+    setSongs(updatedSongs); // Actualiza el estado de las canciones
+    saveSongToLocalStorage(updatedSongs); // Guarda las canciones en localStorage
   };
 
-  const uploadSong = (songUrl) => {
-    saveSongToLocalStorage(songUrl);
+  // Función para obtener las canciones del localStorage
+  const getSongs = () => {
+    return getSongsFromLocalStorage() || fakeDbofSongs;
   };
 
-  const loginUser = (username, password) => {
+  // Función para iniciar sesión
+  const login = (username, password) => {
     const user = users.find(
       (user) => user.username === username && user.password === password
     );
     if (user) {
       setCurrentUser(user);
       saveCurrentUserToLocalStorage(user);
-      setError(null);
-      return { success: true };
-    } else {
-      setError("Usuario o contraseña incorrectos.");
-      return { error: "Usuario o contraseña incorrectos." };
+      return true;
     }
+    return false;
   };
 
+  // Función para cerrar sesión
   const logout = () => {
     setCurrentUser(null);
-    saveCurrentUserToLocalStorage(null);
+    localStorage.removeItem("currentUser");
   };
 
-  const getAllUsers = () => {
-    return users;
-  };
-
+  // Exportamos la función y valores para ser utilizados por otros componentes
   return (
     <UserContext.Provider
       value={{
         users,
         currentUser,
-        isLoading,
-        error,
-        addUser,
+        addUser, // Aquí estamos exportando la función addUser
         updateUser,
         deleteUser,
-        deleteAllUsers,
-        uploadAvatar,
-        uploadSong,
-        loginUser,
-        logout,
-        getAllUsers,
+        deleteAllUsersExceptCurrent, // Asegúrate de que la función esté aquí para que sea accesible
+        addSong, // Función para agregar canción
+        getSongs, // Función para obtener las canciones
+        login, // Función para iniciar sesión
+        logout, // Función para cerrar sesión
       }}
     >
       {children}
+      {/* // Componente hijo donde se usará el contexto */}
     </UserContext.Provider>
   );
-}
-
-// Gancho personalizado para usar el contexto de usuario
-export const useUserContext = () => {
-  return useContext(UserContext);
 };
+
+// Hook para consumir el contexto del usuario
+export const useUserContext = () => useContext(UserContext);

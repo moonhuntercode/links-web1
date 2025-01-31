@@ -1,148 +1,72 @@
 // src/components/UserForm.jsx
 import React, { useState, useEffect } from "react";
-
-const UserForm = ({
-  newUsername,
-  setNewUsername,
-  newPassword,
-  setNewPassword,
-  updateUsername,
-  setUpdateUsername,
-  updatePassword,
-  setUpdatePassword,
+import { useUserForm } from "../utils/useUserForm"; // Importamos el custom hook from utils
+import {
   handleAddUser,
-  addUserFunction,
-  setErrors,
-  setUserAddedStatus,
   handleUpdateUser,
-  updateUserFunction,
   handleDeleteUser,
-  deleteUserFunction,
-  errors,
-  selectedUser,
-  userAdded,
-  setUserAdded,
-  users,
-}) => {
-  const [validationErrors, setValidationErrors] = useState({});
+} from "../utils/handleUserActions"; // Lógica de acciones de usuario
+import { validateForm } from "../utils/formValidation"; // Validaciones de formulario
+
+const UserForm = () => {
+  const {
+    newUsername,
+    newPassword,
+    setNewUsername,
+    setNewPassword,
+    setErrors,
+    errors,
+    setUserAdded,
+    setUsers,
+  } = useUserForm(); // Custom hook para manejar el formulario
 
   useEffect(() => {
-    if (userAdded) {
-      console.log(`Usuario ${newUsername} creado correctamente.`);
+    if (errors.length > 0) {
+      // Mostrar errores de validación si existen
+      alert(errors.join(", "));
     }
-  }, [userAdded, newUsername]);
+  }, [errors]);
 
-  const validateUser = (username, password) => {
-    const newErrors = {};
-    if (users.some((user) => user.username === username)) {
-      newErrors.username = "El nombre de usuario ya existe.";
+  const onSubmitHandler = (event) => {
+    event.preventDefault();
+
+    if (validateForm(newUsername, newPassword, setErrors)) {
+      handleAddUser(setUsers, setErrors, setUserAdded, newUsername, newPassword);
+      setNewUsername("");
+      setNewPassword("");
     }
-    if (users.some((user) => user.password === password)) {
-      newErrors.password = "La contraseña ya está en uso.";
-    }
-    setValidationErrors(newErrors);
-    return Object.keys(newErrors).length === 0;
   };
 
   return (
-    <div>
-      <div className="form-section">
-        <h3>Añadir Usuario</h3>
-        <input
-          type="text"
-          placeholder="Nombre de usuario"
-          value={newUsername}
-          className={`input ${errors.username ? "input-error" : ""}`}
-          onChange={(e) => setNewUsername(e.target.value)}
-        />
-        <input
-          type="password"
-          placeholder="Contraseña"
-          value={newPassword}
-          className={`input ${errors.password ? "input-error" : ""}`}
-          onChange={(e) => setNewPassword(e.target.value)}
-        />
-        <button
-          className="btn btn-add"
-          onClick={() => {
-            if (validateUser(newUsername, newPassword)) {
-              handleAddUser(
-                addUserFunction,
-                setErrors,
-                setUserAddedStatus,
-                setNewUsername,
-                setNewPassword
-              )();
-              setUserAddedStatus(true);
-            }
-          }}
-        >
-          Añadir
-        </button>
-        {errors.username && <p className="error">{errors.username}</p>}
-        {errors.password && <p className="error">{errors.password}</p>}
-        {validationErrors.username && (
-          <p className="error">{validationErrors.username}</p>
-        )}
-        {validationErrors.password && (
-          <p className="error">{validationErrors.password}</p>
-        )}
-        {userAdded && (
-          <p className="success">¡Usuario {newUsername} creado correctamente!</p>
-        )}
-      </div>
-      {selectedUser && (
-        <div className="form-section">
-          <h3>Editar Usuario: {selectedUser.username}</h3>
+    <div className="user-form">
+      <h2>Add User</h2>
+      <form onSubmit={onSubmitHandler}>
+        <div>
+          <label htmlFor="username">Username:</label>
           <input
             type="text"
-            placeholder="Nuevo nombre de usuario"
-            value={updateUsername}
-            className={`input ${errors.updateUsername ? "input-error" : ""}`}
-            onChange={(e) => setUpdateUsername(e.target.value)}
+            id="username"
+            name="username"
+            value={newUsername}
+            onChange={(e) => setNewUsername(e.target.value)}
+            placeholder="Enter username"
+            required
           />
+        </div>
+        <div>
+          <label htmlFor="password">Password:</label>
           <input
             type="password"
-            placeholder="Nueva contraseña"
-            value={updatePassword}
-            className={`input ${errors.updatePassword ? "input-error" : ""}`}
-            onChange={(e) => setUpdatePassword(e.target.value)}
+            id="password"
+            name="password"
+            value={newPassword}
+            onChange={(e) => setNewPassword(e.target.value)}
+            placeholder="Enter password"
+            required
           />
-          <button
-            className="btn btn-update"
-            onClick={() => {
-              if (validateUser(updateUsername, updatePassword)) {
-                handleUpdateUser(
-                  updateUserFunction,
-                  setErrors,
-                  setUpdateUsername,
-                  setUpdatePassword
-                )();
-                setUserAddedStatus(true);
-              }
-            }}
-          >
-            Actualizar
-          </button>
-          <button
-            className="btn btn-delete"
-            onClick={() => {
-              handleDeleteUser(deleteUserFunction, setErrors, setUpdateUsername)();
-              setUserAddedStatus(true);
-            }}
-          >
-            Eliminar
-          </button>
-          {errors.updateUsername && <p className="error">{errors.updateUsername}</p>}
-          {errors.updatePassword && <p className="error">{errors.updatePassword}</p>}
-          {validationErrors.updateUsername && (
-            <p className="error">{validationErrors.updateUsername}</p>
-          )}
-          {validationErrors.updatePassword && (
-            <p className="error">{validationErrors.updatePassword}</p>
-          )}
         </div>
-      )}
+        <button type="submit">Add User</button>
+      </form>
     </div>
   );
 };

@@ -1,153 +1,125 @@
 /* src/css/AdminPanel.css */
-.admin-container {
-  color: black;
-  padding: 20px;
-  width: 100%;
-  margin: auto;
-  background-color: #f8f9fa;
-  border-radius: 8px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-}
 
-h1 {
-  text-align: center;
-  margin-bottom: 20px;
-}
-
-.current-user {
-  text-align: center;
-  margin-bottom: 20px;
-}
-
-.avatar {
-  width: 80px;
-  height: 80px;
-  border-radius: 50%;
-}
-
-.upload-label {
-  display: block;
-  margin-top: 10px;
-  font-weight: bold;
-}
-
-.upload-input {
-  margin-top: 10px;
-}
-
-h3 {
-  text-align: center;
-  margin-top: 20px;
-}
-
-.user-list {
-  list-style: none;
-  padding: 0;
-  margin: 20px 0;
+/* Contenedor principal */
+.admin-panel-container {
   display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  padding: 20px;
+  background-color: #f4f4f4;
+  min-height: 100vh;
 }
 
-.user-item {
+.admin-panel-container h1 {
+  font-size: 2rem;
+  margin-bottom: 20px;
+  color: #333;
+}
+
+/* Sección de gestión de usuarios */
+.user-management-section,
+.song-management-section,
+.avatar-management-section {
+  width: 100%;
+  max-width: 800px;
+  margin: 20px 0;
+  padding: 15px;
+  background-color: white;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.user-management-section h2,
+.song-management-section h2,
+.avatar-management-section h2 {
+  font-size: 1.5rem;
+  margin-bottom: 15px;
+  color: #444;
+}
+
+/* Formato de botones */
+button {
+  cursor: pointer;
+  padding: 10px 15px;
+  margin-top: 10px;
+  border: none;
+  border-radius: 5px;
+  font-size: 1rem;
+  background-color: #007bff;
+  color: white;
+  transition: background-color 0.3s ease;
+}
+
+button:hover {
+  background-color: #0056b3;
+}
+
+button.btn-danger {
+  background-color: #dc3545;
+}
+
+button.btn-danger:hover {
+  background-color: #c82333;
+}
+
+/* Sección de mensaje y lista de usuarios */
+.local-storage-users {
+  width: 100%;
+  max-width: 800px;
+  padding: 15px;
+  background-color: white;
+  border-radius: 8px;
+  margin-top: 30px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.local-storage-users ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+.local-storage-users li {
+  padding: 10px 0;
+  border-bottom: 1px solid #ddd;
+}
+
+.local-storage-users li:last-child {
+  border-bottom: none;
+}
+
+.local-storage-users p {
+  margin-top: 10px;
+  font-size: 1rem;
+  color: #666;
+}
+
+/* Sección de música */
+.song-section {
+  width: 100%;
+  max-width: 800px;
+  padding: 15px;
+  background-color: white;
+  border-radius: 8px;
+  margin-top: 30px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   display: flex;
   align-items: center;
-  margin: 10px;
-  padding: 10px;
-  background-color: #fff;
-  border: 1px solid #ccc;
-  border-radius: 8px;
-  width: calc(33.333% - 20px);
-  box-sizing: border-box;
   justify-content: space-between;
 }
 
-.avatar-small {
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
-  margin-left: 10px;
-}
-
-.form-section {
-  margin-bottom: 20px;
-}
-
-.input {
-  display: block;
-  width: 100%;
-  padding: 10px;
-  margin-bottom: 10px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-}
-
-.input-error {
-  border-color: red;
-}
-
-.btn {
-  display: block;
-  width: 100%;
-  padding: 10px;
-  margin-bottom: 10px;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-}
-
-.btn-add {
+.song-section button {
+  padding: 8px 12px;
+  font-size: 1rem;
   background-color: #28a745;
   color: white;
+  border-radius: 5px;
 }
 
-.btn-update {
-  background-color: #007bff;
-  color: white;
+.song-section button:hover {
+  background-color: #218838;
 }
 
-.btn-delete {
-  background-color: #dc3545;
-  color: white;
-}
-
-.btn-danger {
-  background-color: #ff4d4d;
-  color: white;
-}
-
-.btn-logout {
-  background-color: #6c757d;
-  color: white;
-}
-
-.btn-select {
-  background-color: #ffc107;
-  color: white;
-}
-
-.btn:hover {
-  opacity: 0.8;
-}
-
-.success {
-  color: green;
-  font-weight: bold;
-}
-
-.error {
-  color: red;
-  font-weight: bold;
-}
-
-@media (max-width: 768px) {
-  .user-item {
-    width: calc(50% - 20px);
-  }
-}
-
-@media (max-width: 480px) {
-  .user-item {
-    width: 100%;
-  }
+.song-section audio {
+  display: none;
 }

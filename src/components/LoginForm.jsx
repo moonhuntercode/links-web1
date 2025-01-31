@@ -8,7 +8,7 @@ function LoginForm() {
   const [username, setUsername] = useState(localStorage.getItem("username") || "");
   const [password, setPassword] = useState("");
   const [errors, setErrors] = useState({});
-  const { addUser, loginUser, users, getAllUsers, error, setError } = useUserContext();
+  const { addUser, login, users, error, setError } = useUserContext();
   const passwordRef = useRef(null);
   const [userAdded, setUserAdded] = useState(false);
   const [userExists, setUserExists] = useState(false);
@@ -48,8 +48,8 @@ function LoginForm() {
 
   const handleLogin = (event) => {
     event.preventDefault();
-    const result = loginUser(username, password);
-    if (result.error) {
+    const result = login(username, password);
+    if (result && result.error) {
       setErrors({ login: result.error });
       return;
     }
@@ -121,7 +121,7 @@ function LoginForm() {
         {showUsers && (
           <div>
             <h3>Usuarios Guardados:</h3>
-            {getAllUsers().map((user, index) => (
+            {users.map((user, index) => (
               <p key={index}>
                 {user.username}: {user.password}
               </p>
